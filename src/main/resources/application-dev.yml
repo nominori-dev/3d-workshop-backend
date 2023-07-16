@@ -23,3 +23,7 @@ spring:
 #          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 server:
   port: ${SERVER_PORT:8088}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
