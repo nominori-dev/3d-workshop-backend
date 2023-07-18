@@ -3,3 +3,5 @@ databaseChangeLog:
         file: db/changelog/migrations/create-user-schema.sql
   - include: 
       file: db/changelog/migrations/create-customer-schema.sql
+  - include:
+      file: db/changelog/migrations/create-product-schema.sql
