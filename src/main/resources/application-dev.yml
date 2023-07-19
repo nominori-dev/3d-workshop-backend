@@ -1,9 +1,9 @@
 spring:
   rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: user
-    password: bitnami
+    host: ${RABBIT_HOST:127.0.0.1}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:user}
+    password: ${RABBIT_PASSWORD:bitnami}
   liquibase:
     change-log: db/changelog/db.changelog-master.yaml
   jpa:
@@ -18,7 +18,7 @@ spring:
   datasource:
     password: ${DB_PASSWORD:postgres}
     username: ${DB_USERNAME:postgres}
-    url: jdbc:postgresql://${DB_HOSTNAME:localhost}:${DB_PORT:5432}/${DB_DATABASE:oms}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:oms}
     driver-class-name: org.postgresql.Driver
   security:
     oauth2:
