@@ -1,5 +1,7 @@
 package com.nominori.oms.security;
 
+import com.nominori.oms.security.util.RoleConverter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class JwtAuthConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
@@ -41,7 +44,7 @@ public class JwtAuthConverter implements Converter<Jwt, Collection<GrantedAuthor
                 // Iterate of the roles and add them to the granted authorities
                 Collection<GrantedAuthority> realmRoles = roles.stream()
                         // Prefix all realm roles with "ROLE_realm_"
-                        .map(role -> new SimpleGrantedAuthority(PREFIX_REALM_ROLE + role))
+                        .map(role -> new SimpleGrantedAuthority(RoleConverter.convert(PREFIX_REALM_ROLE + role)))
                         .collect(Collectors.toList());
                 grantedAuthorities.addAll(realmRoles);
             }
@@ -56,8 +59,9 @@ public class JwtAuthConverter implements Converter<Jwt, Collection<GrantedAuthor
                 // Iterate of the "roles" claim inside the resource claims
                 resourceClaims.get(CLAIM_ROLES).forEach(
                         // Add the role to the granted authority prefixed with ROLE_ and the name of the resource
-                        role -> grantedAuthorities.add(new SimpleGrantedAuthority(PREFIX_RESOURCE_ROLE + resource + "_" + role))
-                );
+                        role -> grantedAuthorities.add(new SimpleGrantedAuthority(
+                                RoleConverter.convert(PREFIX_RESOURCE_ROLE + resource + "_" + role)
+                        )));
             });
         }
 
