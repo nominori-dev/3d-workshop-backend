@@ -1,63 +1,66 @@
 package com.nominori.oms.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimNames;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
-public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
+@Slf4j
+public class JwtAuthConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
+    public static final String PREFIX_REALM_ROLE = "ROLE_realm_";
+    public static final String PREFIX_RESOURCE_ROLE = "ROLE_";
+    private static final String CLAIM_REALM_ACCESS = "realm_access";
+    private static final String CLAIM_RESOURCE_ACCESS = "resource_access";
+    private static final String CLAIM_ROLES = "roles";
 
-    private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-
-    private final JwtAuthConverterProperties properties;
-
-    public JwtAuthConverter(JwtAuthConverterProperties properties) {
-        this.properties = properties;
-    }
 
     @Override
-    public AbstractAuthenticationToken convert(Jwt jwt) {
-        Collection<GrantedAuthority> authorities = Stream.concat(
-                jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
-                extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
-        return new JwtAuthenticationToken(jwt, authorities, getPrincipalClaimName(jwt));
-    }
+    public Collection<GrantedAuthority> convert(Jwt jwt) {
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-    private String getPrincipalClaimName(Jwt jwt) {
-        String claimName = JwtClaimNames.SUB;
-        if (properties.getPrincipalAttribute() != null) {
-            claimName = properties.getPrincipalAttribute();
+        // Realm roles
+        Map<String, Collection<String>> realmAccess = jwt.getClaim(CLAIM_REALM_ACCESS);
+
+        // Verify that the claim exists and is not empty
+        if (realmAccess != null && !realmAccess.isEmpty()) {
+            // From the realm_access claim get the roles
+            Collection<String> roles = realmAccess.get(CLAIM_ROLES);
+            // Check if any roles are present
+            if (roles != null && !roles.isEmpty()) {
+                // Iterate of the roles and add them to the granted authorities
+                Collection<GrantedAuthority> realmRoles = roles.stream()
+                        // Prefix all realm roles with "ROLE_realm_"
+                        .map(role -> new SimpleGrantedAuthority(PREFIX_REALM_ROLE + role))
+                        .collect(Collectors.toList());
+                grantedAuthorities.addAll(realmRoles);
+            }
         }
 
-        return jwt.getClaim(claimName);
-    }
 
-    private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
-        Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-        Map<String, Object> resource;
-        Collection<String> resourceRoles;
-        if (resourceAccess == null
-                || (resource = (Map<String, Object>) resourceAccess.get(properties.getResourceId())) == null
-                || (resourceRoles = (Collection<String>) resource.get("roles")) == null) {
-            return Set.of();
+        Map<String, Map<String, Collection<String>>> resourceAccess = jwt.getClaim(CLAIM_RESOURCE_ACCESS);
+
+        // Check if resources are assigned
+        if (resourceAccess != null && !resourceAccess.isEmpty()) {
+            resourceAccess.forEach((resource, resourceClaims) -> {
+                // Iterate of the "roles" claim inside the resource claims
+                resourceClaims.get(CLAIM_ROLES).forEach(
+                        // Add the role to the granted authority prefixed with ROLE_ and the name of the resource
+                        role -> grantedAuthorities.add(new SimpleGrantedAuthority(PREFIX_RESOURCE_ROLE + resource + "_" + role))
+                );
+            });
         }
-        return resourceRoles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
-                .collect(Collectors.toSet());
+
+        return grantedAuthorities;
     }
-
-
 }
