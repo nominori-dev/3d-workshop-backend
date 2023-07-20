@@ -21,10 +21,16 @@ public class PostAuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication == null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
 
         if(token.isAuthenticated()){
-            log.debug("Authenticated UID: " + token.getTokenAttributes().get("sub"));
             userService.getById(UUID.fromString(token.getTokenAttributes().get("sub").toString()));
         }
 
