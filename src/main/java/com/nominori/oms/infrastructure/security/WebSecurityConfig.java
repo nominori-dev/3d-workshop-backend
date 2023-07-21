@@ -1,6 +1,6 @@
 package com.nominori.oms.infrastructure.security;
 
-import com.nominori.oms.core.user.common.service.UserService;
+import com.nominori.oms.application.user.UserService;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

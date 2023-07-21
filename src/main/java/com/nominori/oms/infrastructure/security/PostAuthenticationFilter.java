@@ -1,6 +1,6 @@
 package com.nominori.oms.infrastructure.security;
 
-import com.nominori.oms.core.user.common.service.UserService;
+import com.nominori.oms.application.user.UserService;
 import jakarta.servlet.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

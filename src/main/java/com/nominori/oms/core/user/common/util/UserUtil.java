@@ -1,7 +1,7 @@
 package com.nominori.oms.core.user.common.util;
 
 import com.nominori.oms.core.user.common.User;
-import com.nominori.oms.core.user.common.service.UserService;
+import com.nominori.oms.application.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;

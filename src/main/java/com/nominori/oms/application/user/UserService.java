@@ -1,4 +1,4 @@
-package com.nominori.oms.core.user.common.service;
+package com.nominori.oms.application.user;
 
 import com.nominori.oms.core.user.common.User;
 

@@ -1,7 +1,7 @@
-package com.nominori.oms.core.user.common.service.impl;
+package com.nominori.oms.application.user.impl;
 
 import com.nominori.oms.core.user.common.UserRepository;
-import com.nominori.oms.core.user.common.service.UserService;
+import com.nominori.oms.application.user.UserService;
 import com.nominori.oms.core.user.common.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
