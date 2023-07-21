@@ -1,14 +1,12 @@
 package com.nominori.oms.product;
 
-import com.nominori.oms.product.model.Product;
-import com.nominori.oms.product.model.Type;
-import com.nominori.oms.product.repository.ProductRepository;
+import com.nominori.oms.core.product.Product;
+import com.nominori.oms.core.product.Type;
+import com.nominori.oms.core.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashSet;

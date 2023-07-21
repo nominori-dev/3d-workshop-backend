@@ -1,5 +1,6 @@
 package com.nominori.oms.security;
 
+import com.nominori.oms.infrastructure.security.JwtAuthConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
