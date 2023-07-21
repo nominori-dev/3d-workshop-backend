@@ -18,6 +18,7 @@ public class Type {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "type_name")
@@ -35,4 +36,9 @@ public class Type {
             mappedBy = "productType")
     private Set<Product> products = new HashSet<>();
 
+
+    public Type(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

@@ -17,6 +17,7 @@ public class Product {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -25,7 +26,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "oms_product_type",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -33,4 +34,9 @@ public class Product {
     )
     private Set<Type> productType = new HashSet<>();
 
+    public Product(String name, String description, Set<Type> productType) {
+        this.name = name;
+        this.description = description;
+        this.productType = productType;
+    }
 }
