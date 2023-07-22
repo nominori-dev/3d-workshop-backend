@@ -17,7 +17,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
     // #TODO Find more easier option to handle runtime exceptions
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+/*    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -27,8 +27,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return errors;
-    }
+    }*/
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException exception){
         return new ErrorResponse(exception.getMessage());
