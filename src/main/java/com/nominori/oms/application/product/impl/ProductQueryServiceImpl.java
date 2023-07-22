@@ -18,4 +18,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with provided ID not found."));
     }
+
+    @Override
+    public Product findByName(String name) {
+        return productRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with provided name not found."));
+    }
 }

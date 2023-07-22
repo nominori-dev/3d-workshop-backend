@@ -5,5 +5,5 @@ import com.nominori.oms.core.product.Product;
 public interface ProductQueryService {
 
     Product findById(Long id);
-
+    Product findByName(String name);
 }
