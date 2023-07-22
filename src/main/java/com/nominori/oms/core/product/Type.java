@@ -37,6 +37,10 @@ public class Type {
     private Set<Product> products = new HashSet<>();
 
 
+    public Type(String name) {
+        this.name = name;
+    }
+
     public Type(String name, String description) {
         this.name = name;
         this.description = description;

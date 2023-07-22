@@ -18,6 +18,10 @@ public class ProductServiceImpl implements ProductService {
     //#TODO Unique name constraint check
     @Override
     public Product addProduct(Product product) {
+
+
+
+
         return productRepository.save(product);
     }
 
