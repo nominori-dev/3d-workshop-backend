@@ -20,7 +20,7 @@ public class ProductController {
     private final ProductConverter productConverter;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole({'API_ADMIN'})")
+    @PreAuthorize("hasAnyRole({'ROLE_API_ADMIN'})")
     public Product addNewProduct(@RequestBody @Valid ProductDto productDto){
         return productService.addProduct(productConverter.toEntity(productDto));
     }

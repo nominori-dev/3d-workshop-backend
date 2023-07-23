@@ -2,7 +2,6 @@ package com.nominori.oms.api.product.converter;
 
 import com.nominori.oms.api.exception.ResourceNotFoundException;
 import com.nominori.oms.api.product.dto.ProductDto;
-import com.nominori.oms.application.product.type.NewTypeParam;
 import com.nominori.oms.application.product.type.TypeQueryService;
 import com.nominori.oms.application.product.type.TypeService;
 import com.nominori.oms.core.product.Product;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -27,8 +25,7 @@ public class ProductConverter {
 
         if(dto.getProductTypeIds() != null && !dto.getProductTypeIds().isEmpty()){
             dto.getProductTypeIds().forEach(id -> {
-                Type type = typeQueryService.findById(id)
-                        .orElseThrow(() -> new ResourceNotFoundException("Product Type with provided ID not found."));
+                Type type = typeQueryService.findById(id);
                 if(type != null){
                     productTypes.add(type);
                 }
