@@ -1,5 +1,6 @@
 package com.nominori.oms.application.product.impl;
 
+import com.nominori.oms.api.exception.ResourceAlreadyExistsException;
 import com.nominori.oms.application.product.ProductService;
 import com.nominori.oms.application.product.UpdateProductParam;
 import com.nominori.oms.core.product.Product;
@@ -13,15 +14,11 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-
-
-    //#TODO Unique name constraint check
     @Override
     public Product addProduct(Product product) {
-
-
-
-
+        if(productRepository.existsByName(product.getName())){
+            throw new ResourceAlreadyExistsException("Product with provided name already exists.");
+        }
         return productRepository.save(product);
     }
 
