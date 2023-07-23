@@ -45,4 +45,11 @@ public class Type {
         this.name = name;
         this.description = description;
     }
+
+    public Type update(String name, String description){
+        this.name = name;
+        this.description = description;
+
+        return this;
+    }
 }
