@@ -27,6 +27,9 @@ public class WebSecurityConfig {
     private final JwtAuthConverter jwtAuthConverter;
     private final UserService userService;
 
+    // #TODO Refactor security
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -36,6 +39,7 @@ public class WebSecurityConfig {
                         new JwtAuthConverter());
 
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/type/{id}").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.oauth2ResourceServer(oauth2 -> {
