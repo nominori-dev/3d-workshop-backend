@@ -1,5 +1,6 @@
 package com.nominori.oms.application.product.type.impl;
 
+import com.nominori.oms.api.exception.ResourceAlreadyExistsException;
 import com.nominori.oms.api.exception.ResourceNotFoundException;
 import com.nominori.oms.application.product.type.TypeParam;
 import com.nominori.oms.application.product.type.TypeQueryService;
@@ -18,11 +19,14 @@ public class TypeServiceImpl implements TypeService {
     private final TypeRepository typeRepository;
     private final TypeQueryService typeQueryService;
 
-
-    // #TODO Catch name constraint violation
     @Override
     public Type addType(Type type) {
         log.info("Adding new Type: " + type.getName());
+
+        if(typeRepository.existsByName(type.getName())){
+            throw new ResourceAlreadyExistsException("Type with provided name already exists");
+        }
+
         return typeRepository.save(type);
     }
 
