@@ -27,8 +27,7 @@ public class WebSecurityConfig {
     private final JwtAuthConverter jwtAuthConverter;
     private final UserService userService;
 
-    // #TODO Refactor security
-
+    private final String[] publicAccessUrls = {"/type/{id}", "/product/{id}"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,14 +38,13 @@ public class WebSecurityConfig {
                         new JwtAuthConverter());
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/type/{id}").permitAll()
+                .requestMatchers(publicAccessUrls).permitAll()
                 .anyRequest().authenticated());
+
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.oauth2ResourceServer(oauth2 -> {
-            oauth2.jwt(jwtConfigurer -> {
-                jwtConfigurer.jwtAuthenticationConverter(jwt -> new JwtAuthenticationToken(jwt, authoritiesConverter.convert(jwt)));
-            });
-        }).addFilterAfter(postAuthFilter(), BearerTokenAuthenticationFilter.class);
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> {
+            jwtConfigurer.jwtAuthenticationConverter(jwt -> new JwtAuthenticationToken(jwt, authoritiesConverter.convert(jwt)));
+        })).addFilterAfter(postAuthFilter(), BearerTokenAuthenticationFilter.class);
 
         return http.build();
     }
