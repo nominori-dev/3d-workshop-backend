@@ -21,3 +21,14 @@ CREATE TABLE oms_order
         REFERENCES oms_users
 );
 
+CREATE TABLE oms_order_items
+(
+    order_id BIGINT NOT NULL,
+    order_item_id BIGINT NOT NULL,
+    CONSTRAINT fk_order_id
+        FOREIGN KEY (order_id)
+            REFERENCES oms_order,
+    CONSTRAINT fk_order_item_id
+        FOREIGN KEY (order_item_id)
+            REFERENCES oms_order_item
+);
