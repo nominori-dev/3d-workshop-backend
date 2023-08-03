@@ -1,0 +1,2 @@
+ALTER TABLE oms_products
+ADD price DECIMAL(18, 8) NOT NULL DEFAULT '100';
