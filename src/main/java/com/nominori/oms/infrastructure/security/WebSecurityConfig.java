@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,7 +28,7 @@ public class WebSecurityConfig {
     private final JwtAuthConverter jwtAuthConverter;
     private final UserService userService;
 
-    private final String[] publicAccessUrls = {"/type/{id}", "/product/{id}"};
+    private final String[] publicAccessUrls = {"/type/{id}", "/product/{id}", "/product/"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,7 +39,7 @@ public class WebSecurityConfig {
                         new JwtAuthConverter());
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(publicAccessUrls).permitAll()
+                .requestMatchers(HttpMethod.GET, publicAccessUrls).permitAll()
                 .anyRequest().authenticated());
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

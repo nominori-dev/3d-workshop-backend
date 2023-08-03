@@ -2,6 +2,8 @@ package com.nominori.oms.api.product;
 
 import com.nominori.oms.api.product.converter.ProductConverter;
 import com.nominori.oms.api.product.dto.ProductDto;
+import com.nominori.oms.api.product.model.ProductModel;
+import com.nominori.oms.api.product.model.ProductModelAssembler;
 import com.nominori.oms.application.product.ProductQueryService;
 import com.nominori.oms.application.product.ProductService;
 import com.nominori.oms.application.product.QueryProductParam;
@@ -10,6 +12,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,8 @@ public class ProductController {
     private final ProductService productService;
     private final ProductQueryService productQueryService;
     private final ProductConverter productConverter;
+    private final ProductModelAssembler productModelAssembler;
+    private final PagedResourcesAssembler<Product> productPagedResourcesAssembler;
 
     @PostMapping
     @PreAuthorize("hasAnyRole({'ROLE_API_ADMIN'})")
@@ -36,9 +42,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public Page<ProductDto> getAllProducts(QueryProductParam param){
+    public PagedModel<ProductModel> getAllProducts(QueryProductParam param){
         Page<Product> productPage = productQueryService.findAll(param);
-        return productPage.map(productConverter::toDto);
+        return productPagedResourcesAssembler.toModel(productPage, productModelAssembler);
     }
 
 }
