@@ -20,4 +20,10 @@ public class TypeQueryServiceImpl implements TypeQueryService {
         return typeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Type not found by provided ID."));
     }
+
+    @Override
+    public Type findByName(String name) {
+        return typeRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Type not found by provided name."));
+    }
 }

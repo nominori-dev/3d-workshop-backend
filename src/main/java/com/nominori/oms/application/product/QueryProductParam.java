@@ -19,6 +19,7 @@ public class QueryProductParam {
 
     private List<String> sortList = List.of("name");
     private Sort.Direction sortOrder = Sort.Direction.DESC;
+    private List<String> types = new ArrayList<>();
 
     public Pageable getPageable(){
         return PageRequest.of(this.page, this.size);
