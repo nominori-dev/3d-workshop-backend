@@ -17,7 +17,7 @@ import java.util.Collection;
 public class UserController {
 
     @Profile("dev")
-    @PreAuthorize("hasAnyRole({'API_ADMIN', 'API_USER'})")
+    @PreAuthorize("hasAnyRole({'OMS_ADMIN', 'OMS_USER'})")
     @GetMapping("/roles")
     public Collection<SimpleGrantedAuthority> getRoles() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
