@@ -43,6 +43,9 @@ cd 3d-workshop-backend
 # Compose files stored in /docs folder. 
 # This will be replaced soon with single development compose file
 docker-compose --project-directory ./ -f docs/compose/keycloak/docker-compose.yml up -d
+docker-compose --project-directory ./ -f docs/dev-compose.yml up -d
+
+# If dev-compose.yml not working, try using old deployment method.
 docker-compose --project-directory ./ -f docs/compose/postgres/docker-compose.yml up -d
 docker-compose --project-directory ./ -f docs/compose/rabbitmq/docker-compose.yml up -d
 ```
