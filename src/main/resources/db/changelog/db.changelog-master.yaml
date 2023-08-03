@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/migrations/create-product-schema.sql
   - include:
       file: db/changelog/migrations/create-order-schema.sql
+  - include:
+      file: db/changelog/migrations/add-price-to-product.sql
