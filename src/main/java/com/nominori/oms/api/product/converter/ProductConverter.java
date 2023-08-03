@@ -36,4 +36,16 @@ public class ProductConverter {
         return product;
     }
 
+    public ProductDto toDto(Product product){
+        Set<Long> productTypeIds = new HashSet<>();
+        product.getProductType().forEach(type -> {
+            productTypeIds.add(product.getId());
+        });
+
+        return ProductDto.builder()
+                .name(product.getName())
+                .description(product.getDescription())
+                .productTypeIds(productTypeIds).build();
+    }
+
 }

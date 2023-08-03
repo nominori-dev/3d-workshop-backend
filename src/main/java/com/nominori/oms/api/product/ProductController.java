@@ -4,11 +4,16 @@ import com.nominori.oms.api.product.converter.ProductConverter;
 import com.nominori.oms.api.product.dto.ProductDto;
 import com.nominori.oms.application.product.ProductQueryService;
 import com.nominori.oms.application.product.ProductService;
+import com.nominori.oms.application.product.QueryProductParam;
 import com.nominori.oms.core.product.Product;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/product/")
@@ -28,6 +33,12 @@ public class ProductController {
     @GetMapping("{id}")
     public Product getProductById(@PathVariable Long id){
         return productQueryService.findById(id);
+    }
+
+    @GetMapping
+    public Page<ProductDto> getAllProducts(QueryProductParam param){
+        Page<Product> productPage = productQueryService.findAll(param);
+        return productPage.map(productConverter::toDto);
     }
 
 }

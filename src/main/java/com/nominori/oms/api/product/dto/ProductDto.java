@@ -3,15 +3,15 @@ package com.nominori.oms.api.product.dto;
 import com.nominori.oms.core.product.Product;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductDto {
 
     @NotBlank
@@ -27,5 +27,7 @@ public class ProductDto {
     public Product toEntity(){
         return new Product(this.name, this.description);
     }
+
+
 
 }
