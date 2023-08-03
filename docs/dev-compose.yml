@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  db:
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nominori@bdv.pw
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+  rabbitmq:
+    container_name: rabbitmq
+    image: docker.io/bitnami/rabbitmq:3.12
+    ports:
+      - '4369:4369'
+      - '5551:5551'
+      - '5552:5552'
+      - '5672:5672'
+      - '25672:25672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_SECURE_PASSWORD=yes
+      - RABBITMQ_LOGS=-
+    volumes:
+      - 'rabbitmq_data:/bitnami/rabbitmq/mnesia'
+volumes:
+  rabbitmq_data:
+    driver: local
