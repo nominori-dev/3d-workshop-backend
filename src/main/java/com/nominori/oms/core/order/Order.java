@@ -1,5 +1,7 @@
 package com.nominori.oms.core.order;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import com.nominori.oms.core.user.common.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,19 +28,19 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "email")
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private OrderStatus status = OrderStatus.CREATED;
 
     @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @CreationTimestamp
     @Column(name = "created_on")
+    @JsonSerialize(using = InstantSerializer.class)
     private Instant createdOn;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -48,4 +50,31 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "order_item_id")
     )
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    public Order(String email) {
+        this.email = email;
+    }
+
+    public void addOrderItem(OrderItem item){
+        orderItems.add(item);
+    }
+
+    public void cancelOrder(){
+        this.status = OrderStatus.CANCELLED;
+    }
+
+    public void completeOrder(){
+        this.status = OrderStatus.COMPLETED;
+    }
+
+    public void calculateTotalPrice(){
+        for (OrderItem item : this.orderItems) {
+            BigDecimal itemPrice = item.getProduct()
+                    .getPrice()
+                    .multiply(BigDecimal.valueOf(item.getQuantity()));
+
+            this.totalPrice = this.totalPrice.add(itemPrice);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,9 @@ public class Product {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "price")
+    private BigDecimal price = BigDecimal.ZERO;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

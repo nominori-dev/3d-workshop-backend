@@ -27,12 +27,8 @@ public class OrderItem {
     @Column(name = "quantity")
     private Long quantity;
 
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
-
-    public OrderItem(Product product, Long quantity, BigDecimal totalPrice) {
+    public OrderItem(Product product, Long quantity) {
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
     }
 }
