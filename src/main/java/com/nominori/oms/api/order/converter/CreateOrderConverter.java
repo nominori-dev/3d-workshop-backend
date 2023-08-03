@@ -1,7 +1,6 @@
 package com.nominori.oms.api.order.converter;
 
 import com.nominori.oms.api.order.dto.CreateOrderDto;
-import com.nominori.oms.application.order.OrderService;
 import com.nominori.oms.application.product.ProductQueryService;
 import com.nominori.oms.core.order.Order;
 import com.nominori.oms.core.order.OrderItem;
@@ -10,10 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
