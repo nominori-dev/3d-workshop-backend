@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtAuthConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
-    public static final String PREFIX_REALM_ROLE = "ROLE_realm_";
+    public static final String PREFIX_REALM_ROLE = "ROLE_REALM_";
     public static final String PREFIX_RESOURCE_ROLE = "ROLE_";
     private static final String CLAIM_REALM_ACCESS = "realm_access";
     private static final String CLAIM_RESOURCE_ACCESS = "resource_access";
