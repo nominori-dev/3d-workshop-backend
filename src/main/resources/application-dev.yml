@@ -29,6 +29,14 @@ spring:
 server:
   port: ${SERVER_PORT:8088}
 
+blackblaze:
+  app-key-id: ${B2_APP_KEY_ID}
+  app_key: ${B2_APP_KEY}
+  bucket:
+    name: ${B2_BUCKET_NAME}
+    id: ${B2_BUCKET_ID}
+
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

@@ -27,6 +27,18 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.backblaze.b2</groupId>
+            <artifactId>b2-sdk-core</artifactId>
+            <version>6.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backblaze.b2</groupId>
+            <artifactId>b2-sdk-httpclient</artifactId>
+            <version>6.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -93,7 +105,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
