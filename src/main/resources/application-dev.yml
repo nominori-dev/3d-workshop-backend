@@ -3,7 +3,7 @@ spring:
     host: ${RABBIT_HOST:127.0.0.1}
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USER:user}
-    password: ${RABBIT_PASSWORD:bitnami}
+    password: ${RABBIT_PASSWORD:pass}
   liquibase:
     change-log: db/changelog/db.changelog-master.yaml
   jpa:
@@ -16,26 +16,13 @@ spring:
   application:
     name: order-management-system
   datasource:
-    password: ${DB_PASSWORD:postgres}
-    username: ${DB_USERNAME:postgres}
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:oms}
+    password: ${DB_PASSWORD:root}
+    username: ${DB_USERNAME:root}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:test_db}
     driver-class-name: org.postgresql.Driver
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${ISSUER_URL}
-          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
 server:
   port: ${SERVER_PORT:8088}
-
-blackblaze:
-  app-key-id: ${B2_APP_KEY_ID}
-  app_key: ${B2_APP_KEY}
-  bucket:
-    name: ${B2_BUCKET_NAME}
-    id: ${B2_BUCKET_ID}
-
 
 springdoc:
   swagger-ui:

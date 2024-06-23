@@ -2,10 +2,8 @@ package com.nominori.oms.api.product.model;
 
 import com.nominori.oms.api.product.ProductController;
 import com.nominori.oms.core.product.Product;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 @Component

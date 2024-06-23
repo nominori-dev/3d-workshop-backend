@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -31,7 +30,6 @@ public class ProductController {
     private final PagedResourcesAssembler<Product> productPagedResourcesAssembler;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole({'ROLE_API_ADMIN'})")
     public Product addNewProduct(@RequestBody @Valid ProductDto productDto){
         return productService.addProduct(productConverter.toEntity(productDto));
     }
