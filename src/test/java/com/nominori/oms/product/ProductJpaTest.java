@@ -1,8 +1,8 @@
 package com.nominori.oms.product;
 
-import com.nominori.oms.core.product.Product;
-import com.nominori.oms.core.product.Type;
-import com.nominori.oms.core.product.ProductRepository;
+import com.nominori.oms.product.domain.Product;
+import com.nominori.oms.product.domain.Type;
+import com.nominori.oms.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
